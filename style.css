@@ -1,5 +1,6 @@
 html {
   color-scheme: light;
+  container: document / inline-size;
 
   &[data-theme="dark"] {
     color-scheme: dark;
@@ -16,16 +17,32 @@ html {
 }
 
 article {
-  padding: 1rlh;
+  @container document (width > 768px) {
+    /* document, from the HTML */
+    grid-template-columns: 300px 1fr;
+  }
+  container: article / inline-size;
+  @container article (width < 550px) {
+    display: grid;
+    img {
+      -webkit-mask-image: linear-gradient(
+        to bottom,
+        black 50%,
+        transparent 100%
+      );
+      mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    }
+  }
+  padding: 1.5rlh;
   max-inline-size: 1200px;
   margin-inline: auto;
 
   display: grid;
-  gap: 1.5rlh;
+  gap: 2rlh;
 
-  @media (width > 768px) {
+  /* @media (width > 768px) {
     grid-template-columns: 300px 1fr;
-  }
+  } */
 
   p {
     font-size: 0.9rem;
@@ -34,6 +51,12 @@ article {
 }
 
 header {
+  container: header / inline-size;
+  @container header (width >= 550px) {
+    > * {
+      grid-template-columns: 250px 1fr;
+    }
+  }
   img {
     aspect-ratio: 1;
     object-fit: cover;
@@ -118,6 +141,10 @@ header {
     div {
       display: grid;
       font-size: 0.9rem;
+    }
+
+    .song-name {
+      font-weight: 900;
     }
 
     .duration {
