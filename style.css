@@ -25,6 +25,7 @@ article {
   @container article (width < 550px) {
     display: grid;
     img {
+      max-width: revert;
       -webkit-mask-image: linear-gradient(
         to bottom,
         black 50%,
@@ -102,6 +103,7 @@ header {
   gap: 1ch;
 
   button[data-button] {
+    flex: 1;
     border-radius: 1e5px;
     border: 0;
     background: var(--action-primary);
