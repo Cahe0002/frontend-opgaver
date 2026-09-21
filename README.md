@@ -1,70 +1,94 @@
-# Frontend Design - Opgaver
+# Doughnut Chart
 
-> [!IMPORTANT]  
-> Brug **Use this template** og vælg **Include all branches**. Du skal ikke forke eller klone repoet.
+## Formål
 
-## Kom i gang
-
-1. Klik på **Use this template** øverst til højre.
-2. Vælg **Create a new repository**.
-3. Giv repoet et navn, fx `frontend-design-opgaver`.
-4. Vigtigt: Sæt flueben ved **Include all branches**.
-   ![Medtag alle branches](./resources/branches.png)
-5. Klon dit nye repository til din computer.
-
-6. Forbind projektet med Netlify (https://netlify.com) og sørg for, at deployment sker fra alle branches. Se nedenfor:
-
-   ![Deplyoyment from Netlify](./resources/netlify.png)
-
-Du er nu klar til at gå i gang med opgaverne. Når du skal lave en øvelse, så vælg denne ved at skifte til den relevante branch (se liste over øvelser nedenfor).
-
-En branch bliver typisk tilgængelig på en URL i dette format:
-
-```txt
-branch-navn--site-navn.netlify.app
-```
-
-## Opgaveoversigt (via branches)
-
-### Selectors
-
-- No Classes ("no-classes")
-
-### Layout
-
-- Makro-layout med full-bleed ("makrolayout")
-- Grid Breakout ("breakout")
-- Scrolling Container ("scrolling-container")
-- Subgrid Caption ("subgrid-caption")
-- Subgrid Card ("subgrid-card")
-- Responsive Container ("responsive-container")
-- Responsive Album ("responsive-album")
-- Bento Grid ("bento-grid")
-
-### UI Patterns
-
-- Flow Space-teknikken ("flow-space")
-- Styling af tekstindhold ("text-styling")
-- Card UI ("card-ui")
-- Animated Accordion w/ details/summary ("details-accordion")
-- Relative Color Syntax ("relative-color")
-
-### Moderne CSS og progressive enhancement
-
-- Anchor Positioning ("anchor-positioning")
-- @supports og reel fallback ("supports-fallback")
-
-### CSS-arkitektur
-
-- CSS-arkitektur: ansvar før mapper ("css-architecture")
-
-### Code in the Dark
-
-- Code in the Dark: Roles Section ("citd-1")
-- Code in the Dark: Profile Card ("citd-2")
+At omsætte en værdi i HTML til en visuel statistik med SVG, custom properties og typed `attr()`. Du skal forbinde tallet, ringens længde og en markør, så de reagerer på samme `data-value`.
 
 ## Ressourcer
 
-- [CSS Reset](/resources/reset.css)
-- [CSS Patterns](/resources/patterns.md) (Opdateres løbende...)
-- [CSS Anti-Patterns](/resources/anti-patterns.md) (Opdateres løbende...)
+- [MDN: SVG circle](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/circle)
+- [MDN: pathLength](https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/pathLength)
+- [MDN: attr()](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/attr)
+- [MDN: stroke-dasharray](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/stroke-dasharray)
+- [MDN: stroke-dashoffset](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/stroke-dashoffset)
+- [MDN: offset-path](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/offset-path)
+- [MDN: offset-distance](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/offset-distance)
+
+## Opgavebeskrivelse
+
+Du får tre statistikker: **Consistency (85%)**, **Improvement (95%)** og **Branching (90%)**. Hver statistik har en `figure` med et `data-value`, en SVG og en billedtekst. Det er tre uafhængige procentværdier, ikke dele af en fælles sum på 100%.
+
+Det færdige resultat skal vise en lys grå ring med en sort bue, der starter øverst og går med uret. Værdien står i midten, og en rød markør sidder ved buens slutning. Statistikken har sin label nedenunder. Alle tre figurer skal bruge de samme CSS-regler.
+
+Starteren viser hele sorte ringe og værdier i billedteksterne. Det er med vilje: forbindelsen fra data til grafik er din opgave.
+
+Projektet er almindelig HTML og CSS. Åbn `index.html` i browseren, eller brug Live Server. Der skal ikke installeres pakker eller køres et build.
+
+Arbejd i `style.css`, og følg TODO-markeringerne.
+
+### 1. Én værdi, tre typer
+
+Læs `data-value` på `figure` med `attr()` som:
+
+- `--value-string`: tekst til tallet i midten.
+- `--value-number`: et tal til beregningen af buens længde.
+- `--value-percent`: en procent til markørens position.
+
+Behold værdierne lokalt på hver `figure`, så dens SVG-elementer kan arve dem. Du skal ikke skrive særskilte regler for 85, 95 og 90.
+
+### 2. Fra cirkel til bue
+
+SVG'en har et koordinatsystem på `100 × 100`. Sporet og buen har centrum i `(50, 50)` og radius `46`.
+
+`pathLength="100"` normaliserer buens længde til 100 enheder, så du kan arbejde direkte med tal mellem 0 og 100 uden at beregne cirklens omkreds.
+
+- Brug `stroke-dasharray` til at lave en streg, der dækker én omgang.
+- Brug `stroke-dashoffset` til at skjule den del, der mangler op til 100. Hvor meget skal skjules ved værdien 85?
+- Drej SVG'en, så starten ligger klokken 12.
+
+**Hint:** Brug tal uden procenttegn til dash-egenskaberne. Procenter her måles ikke langs cirklens omkreds. Du kan afprøve `100.1` som dash-længde, som i undervisningseksemplet, for at undgå en lille samling ved en hel omgang.
+
+### 3. Tallet i midten
+
+Læg SVG'en og `figure::after` i det samme grid-område, `stack`. Lad `figcaption` ligge under diagrammet.
+
+Vis `--value-string` gennem `content`, og lad tallets størrelse følge figurens bredde med `30cqw`. Husk en inline-size-container på `figure`, så enheden har den rigtige reference.
+
+Værdien findes også som almindelig HTML-tekst i `figcaption`. Behold den: diagrammet skal kunne forstås uden CSS og uden at aflæse grafikken. SVG'en er derfor skjult for skærmlæsere med `aria-hidden="true"`. CSS-genereret indhold er ikke den eneste tekstkilde.
+
+### 4. Markøren følger værdien
+
+Giv `.marker` en cirkulær `offset-path` med samme radius og centrum som ringen. Brug `--value-percent` som `offset-distance`, og gør markøren synlig.
+
+Her er procenten netop en position langs stien. Kontrollér, at markøren følger buens slutning, når du ændrer værdien.
+
+## Specifikke mål
+
+- Forstå forskellen på en attribut læst som tekst, tal og procent.
+- Bruge lokale custom properties til at forbinde flere dele af samme figur.
+- Bruge `pathLength`, `stroke-dasharray` og `stroke-dashoffset` til at vise en værdi.
+- Placere en markør med `offset-path` og `offset-distance`.
+- Kombinere SVG, pseudo-elementer og containerenheder uden JavaScript.
+- Bevare statistik som læsbar tekst ved siden af den visuelle fremstilling.
+
+## Afprøv din løsning
+
+- Test 0, 25, 50, 75 og 100. Markøren skal følge den forventede position rundt om ringen.
+- Ved 0 kan runde stregender give en lille prik. Overvej at skjule `.progress` ved `data-value="0"`.
+- Test en smal skærm og en længere label. Figurerne skal kunne wrappe uden vandret overflow.
+- Kopiér en figur, og giv den en ny værdi. Den skal virke uden nye CSS-regler.
+- Opdatér også teksten i `figcaption`, når du ændrer `data-value`: i denne statiske HTML-udgave står værdien begge steder.
+- Slå CSS fra. Kan du stadig læse de tre statistikker?
+
+> [!NOTE]
+> Branchen inkluderer et CSS Reset via `resources/starter.css`. Typed `attr()` kræver browserunderstøttelse; se kompatibilitet i MDN-linket. Hvis ringen ikke reagerer, så test i en opdateret browser med understøttelse. De almindelige billedtekster bevarer data som tekst, også uden den visuelle løsning.
+
+## Ekstra udfordring (valgfri)
+
+Tilføj et fjerde kort, og afprøv fx `62.5`. Forklar, hvorfor både stregen og markøren kan følge samme værdi, selv om de bruger forskellige typer.
+
+## Aflevering
+
+Find linket til din løsning på Netlify, og aflever det på Fronter.
+
+Link-struktur: **doughnut-chart--**[Dit unikke netlify link].netlify.app/

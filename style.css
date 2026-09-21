@@ -1,0 +1,81 @@
+body {
+  padding: clamp(1rem, 5vw, 4rem);
+  color: #000;
+  background: #f5f5f5;
+}
+
+main {
+  max-inline-size: 60rem;
+  margin-inline: auto;
+}
+
+h1 {
+  margin-block-end: 2rem;
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.125;
+  text-align: center;
+}
+
+.stat-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+figure {
+  flex: 0 1 200px;
+  min-inline-size: 0;
+  text-align: center;
+
+  /* TODO 1: Læs data-value som tekst, tal og procent med attr().
+     Kald værdierne --value-string, --value-number og --value-percent. */
+
+  /* TODO 3: Brug et fælles grid-område "stack" til SVG og ::after.
+     Centrér indholdet, og opret en inline-size-container med navnet stat. */
+}
+
+figure::after {
+  /* TODO 3: Vis --value-string med content, og placér tallet i "stack".
+     Brug 30cqw og font-weight: 700, så tallet følger figurens bredde. */
+}
+
+svg {
+  /* TODO 2: Drej SVG'en -90deg, så ringen starter øverst. */
+  /* TODO 3: Placér SVG'en i "stack". */
+}
+
+.track {
+  stroke: gainsboro;
+}
+
+.track,
+.progress {
+  cx: 50;
+  cy: 50;
+  r: 46;
+  fill: none;
+  stroke-width: 4;
+}
+
+.progress {
+  stroke: #000;
+  stroke-linecap: round;
+
+  /* TODO 2: Brug stroke-dasharray og stroke-dashoffset sammen med
+     pathLength="100", så --value-number bestemmer ringens længde. */
+}
+
+.marker {
+  /* Markøren vises først, når du arbejder med trin 4. */
+  visibility: hidden;
+
+  /* TODO 4: Brug en cirkulær offset-path med samme centrum og radius
+     som ringen. Lad --value-percent styre offset-distance,
+     og skift visibility til visible. */
+}
+
+figcaption {
+  margin-block-start: 0.75rem;
+}
