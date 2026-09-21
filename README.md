@@ -22,7 +22,7 @@ Det færdige resultat skal vise en lys grå ring med en sort bue, der starter ø
 
 Starteren viser hele sorte ringe og værdier i billedteksterne. Det er med vilje: forbindelsen fra data til grafik er din opgave.
 
-Projektet er almindelig HTML og CSS. Åbn `index.html` i browseren, eller brug Live Server. Der skal ikke installeres pakker eller køres et build.
+Projektet er almindelig HTML og CSS. Åbn `index.html` i browseren, eller brug Live Server.
 
 Arbejd i `style.css`, og følg TODO-markeringerne.
 
@@ -50,11 +50,9 @@ SVG'en har et koordinatsystem på `100 × 100`. Sporet og buen har centrum i `(5
 
 ### 3. Tallet i midten
 
-Læg SVG'en og `figure::after` i det samme grid-område, `stack`. Lad `figcaption` ligge under diagrammet.
+Læg SVG'en og `figure::after` i det samme grid-område. Lad `figcaption` ligge under diagrammet.
 
 Vis `--value-string` gennem `content`, og lad tallets størrelse følge figurens bredde med `30cqw`. Husk en inline-size-container på `figure`, så enheden har den rigtige reference.
-
-Værdien findes også som almindelig HTML-tekst i `figcaption`. Behold den: diagrammet skal kunne forstås uden CSS og uden at aflæse grafikken. SVG'en er derfor skjult for skærmlæsere med `aria-hidden="true"`. CSS-genereret indhold er ikke den eneste tekstkilde.
 
 ### 4. Markøren følger værdien
 
@@ -81,7 +79,7 @@ Her er procenten netop en position langs stien. Kontrollér, at markøren følge
 - Slå CSS fra. Kan du stadig læse de tre statistikker?
 
 > [!NOTE]
-> Branchen inkluderer et CSS Reset via `resources/starter.css`. Typed `attr()` kræver browserunderstøttelse; se kompatibilitet i MDN-linket. Hvis ringen ikke reagerer, så test i en opdateret browser med understøttelse. De almindelige billedtekster bevarer data som tekst, også uden den visuelle løsning.
+> Branchen inkluderer et CSS Reset via `resources/starter.css`. Typed `attr()` kræver browserunderstøttelse; se kompatibilitet i MDN-linket. Hvis ringen ikke reagerer, så test i en opdateret browser med understøttelse.
 
 ## Ekstra udfordring (valgfri)
 
