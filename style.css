@@ -1,16 +1,72 @@
 :root {
-    --gray-50: #f9fafb;
-    --gray-100: #f3f4f6;
-    --gray-200: #e5e7eb;
-    --gray-300: #d1d5db;
-    --gray-400: #9ca3af;
-    --gray-500: #6b7280;
-    --gray-600: #4b5563;
-    --gray-700: #374151;
-    --gray-800: #1f2937;
-    --gray-900: #111827;
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+  --step--2: clamp(0.6944rem, 0.6442rem + 0.2011vw, 0.8rem);
+  --step--1: clamp(0.8333rem, 0.754rem + 0.3175vw, 1rem);
+  --step-0: clamp(1rem, 0.881rem + 0.4762vw, 1.25rem);
+  --step-1: clamp(1.2rem, 1.0274rem + 0.6905vw, 1.5625rem);
+  --step-2: clamp(1.44rem, 1.1957rem + 0.9774vw, 1.9531rem);
+  --step-3: clamp(1.728rem, 1.3883rem + 1.3589vw, 2.4414rem);
 }
 
 body {
-    font-family: system-ui, sans-serif;
+  font-family: system-ui, sans-serif;
+}
+
+/* 
+display / stor overskrift: 1.05-1.2
+overskrifter (h2/h3): 1.1-1.3
+lead / intro: 1.2-1.4
+brødtekst: 1.45-1.65
+småtekst / metadata: 1.3-1.5
+*/
+
+article {
+  --range: 200px, 1200px;
+  --p: progress(100cqw, var(--range));
+  padding: calc(1rem + var(--p) * 1rem);
+  margin-inline: auto;
+  max-inline-size: 100ch;
+  > * + * {
+    margin-top: var(--flow-spacing, 1rlh);
+  }
+  h1 {
+    --flow-spacing: 2rlh;
+    font-size: var(--step-3);
+    line-height: 1.1;
+    font-weight: round(400 + var(--p) * 300, 50);
+  }
+  h2 {
+    font-size: var(--step-2);
+    line-height: 1.15;
+  }
+  h3 {
+    font-size: var(--step-1);
+    line-height: 1.25;
+  }
+  --text-bold: oklch(0.28 0.03 26);
+  .text-lead {
+    font-size: var(--step-0);
+    line-height: 1.5;
+    color: var(--text-bold);
+  }
+  p {
+    --text-medium: oklch(0.37 0.03 26);
+    font-size: var(--step--0);
+    --flow-spacing: 0.7rlh;
+    color: var(--text-medium);
+  }
+}
+
+article :is(h1, h2, h3) {
+  --text-strong: oklch(0.22 0.03 260);
+  color: var(--text-strong);
 }
