@@ -25,25 +25,38 @@ h1 {
 }
 
 figure {
-  flex: 0 1 200px;
-  min-inline-size: 0;
-  text-align: center;
-
   /* TODO 1: Læs data-value som tekst, tal og procent med attr().
      Kald værdierne --value-string, --value-number og --value-percent. */
 
+  --value-string: attr(data-value);
+  --value-number: attr(data-value type(<number>));
+  --value-percent: attr(data-value %);
+
   /* TODO 3: Brug et fælles grid-område "stack" til SVG og ::after.
      Centrér indholdet, og opret en inline-size-container med navnet stat. */
+  container: stack / inline-size;
+  display: grid;
+  grid: "stack";
+  place-items: center;
+  flex: 0 1 200px;
+  min-inline-size: 0;
+  text-align: center;
 }
 
 figure::after {
+  content: var(--value-string) "%";
+  grid-area: stack;
   /* TODO 3: Vis --value-string med content, og placér tallet i "stack".
      Brug 30cqw og font-weight: 700, så tallet følger figurens bredde. */
+  font-size: 30cqw;
+  font-weight: 700;
 }
 
 svg {
   /* TODO 2: Drej SVG'en -90deg, så ringen starter øverst. */
+  rotate: 90deg;
   /* TODO 3: Placér SVG'en i "stack". */
+  grid-area: stack;
 }
 
 .track {
@@ -52,16 +65,19 @@ svg {
 
 .track,
 .progress {
+  --stroke-width: 4;
   cx: 50;
   cy: 50;
-  r: 46;
+  r: calc(50 - (var(--stroke-width) / 2));
   fill: none;
-  stroke-width: 4;
+  stroke-width: var(--stroke-width);
 }
 
 .progress {
   stroke: #000;
   stroke-linecap: round;
+  stroke-dasharray: 100;
+  stroke-dashoffset: calc(100 - var(--value-number));
 
   /* TODO 2: Brug stroke-dasharray og stroke-dashoffset sammen med
      pathLength="100", så --value-number bestemmer ringens længde. */
@@ -69,11 +85,14 @@ svg {
 
 .marker {
   /* Markøren vises først, når du arbejder med trin 4. */
-  visibility: hidden;
+  visibility: visible;
 
   /* TODO 4: Brug en cirkulær offset-path med samme centrum og radius
      som ringen. Lad --value-percent styre offset-distance,
      og skift visibility til visible. */
+  offset-path: circle(48px at 50px 50px);
+  offset-distance: var(--value-percent);
+  fill: #000;
 }
 
 figcaption {
