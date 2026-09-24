@@ -18,12 +18,10 @@ import { cardContent } from "../data/card-content.js";
     <main>
       <section>
         <header>
+          <p>Financial Tools</p>
           <h2>Financial Projections</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+           Financial projections are essential for planning and monitoring a company’s performance. They provide insights into potential revenue, expenses, and profitability over specific periods.
           </p>
         </header>
 
@@ -35,8 +33,15 @@ import { cardContent } from "../data/card-content.js";
 
 <style>
   main {
-    padding-block: 4rem; /* Kun af æstetiske årsager */
+ 
+  padding-block: 4rem; /* Kun af æstetiske årsager */
   }
   section {
-  }
+  display: grid;
+  grid-template-columns: 1fr minmax(0, var(--content-width)) 1fr;
+  margin-inline: auto;
+  > * {
+  grid-column: 2;
+  max-width: 640px;
+}}
 </style>
